@@ -11,6 +11,9 @@ public class Sock {
     private String color;
     private int cottonPart;
 
+    @OneToOne(mappedBy = "sock")
+    private SockCount sockCount;
+
     public Sock() {
 
     }
