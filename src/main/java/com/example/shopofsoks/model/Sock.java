@@ -1,5 +1,4 @@
 package com.example.shopofsoks.model;
-
 import jakarta.persistence.*;
 
 @Entity
