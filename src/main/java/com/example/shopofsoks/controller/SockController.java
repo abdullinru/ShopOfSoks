@@ -30,7 +30,7 @@ public class SockController {
             @ApiResponse(responseCode = "500", description = "error on server")})
     @PostMapping("/income")
     public ResponseEntity<SockDto> incomeSocks(@RequestBody SockDto sockDto) {
-//        log.info("Was invoked addAds method from {}", AdsController.class.getSimpleName());
+
         SockDto result = null;
         try {
             result = sockService.incomeSocks(sockDto);
@@ -50,7 +50,7 @@ public class SockController {
             @ApiResponse(responseCode = "500", description = "error on server")})
     @PostMapping("/outcome")
     public ResponseEntity<SockDto> outcomeSocks(@RequestBody SockDto sockDto) {
-//        log.info("Was invoked addAds method from {}", AdsController.class.getSimpleName());
+
         SockDto result = null;
         try {
             result = sockService.outcomeSocks(sockDto);
@@ -72,7 +72,6 @@ public class SockController {
     public ResponseEntity<String> getCountSocksbyParam(@RequestParam(name = "color") String color,
                                                         @RequestParam(name = "operation") String operation,
                                                         @RequestParam(name = "cottonPart") Integer cottonPart) {
-//        log.info("Was invoked addAds method from {}", AdsController.class.getSimpleName());
 
         Integer result = null;
         try {
