@@ -37,11 +37,11 @@ public class SockService {
         checkParam(sockDto);
         Sock findSock = sockRepository.findSocksByColorAndCottonPart(sockDto.getColor(), sockDto.getCottonPart());
         if (findSock == null) {
-            saveNewSock(sockDto);
+            return saveNewSock(sockDto);
         } else {
             increaseCountSock(sockDto, findSock);
         }
-        return sockDto;
+        return SockMapper.INSTANCE.toDtoSock(findSock);
     }
 
     /**
@@ -61,13 +61,16 @@ public class SockService {
     /**
      * Метод создает новую группу носков и сохраняет в БД
      * @param sockDto
+     * @return SockDto
      */
-    private void saveNewSock (SockDto sockDto) {
+    private SockDto saveNewSock (SockDto sockDto) {
         Sock sock = SockMapper.INSTANCE.dtoToSock(sockDto);
         SockCount sockCount = SockMapper.INSTANCE.dtoToSockCount(sockDto);
         sockCount.setSock(sock);
         sockRepository.save(sock);
         sockCountRepository.save(sockCount);
+        sock.setSockCount(sockCount);
+        return SockMapper.INSTANCE.toDtoSock(sock);
     }
 
     /**
@@ -92,7 +95,7 @@ public class SockService {
         Sock findSock = sockRepository.findSocksByColorAndCottonPart(sockDto.getColor(), sockDto.getCottonPart());
         checkSockByNull(findSock);
         decreaseCountSock(sockDto, findSock);
-        return sockDto;
+        return SockMapper.INSTANCE.toDtoSock(findSock);
     }
 
     /**
