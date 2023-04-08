@@ -12,4 +12,7 @@ public interface SockRepository extends JpaRepository<Sock, Integer> {
 
     Sock findSocksByColorAndCottonPart(String color, int cottonPart);
 
+    List<Sock> findSocksByColorAndCottonPartAfter(String color, int cottonPart);
+    List<Sock> findSocksByColorAndCottonPartBefore(String color, int cottonPart);
+
 }

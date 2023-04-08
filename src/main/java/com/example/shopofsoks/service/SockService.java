@@ -1,5 +1,6 @@
 package com.example.shopofsoks.service;
 
+import com.example.shopofsoks.Operat;
 import com.example.shopofsoks.dto.SockDto;
 import com.example.shopofsoks.mapper.SockMapper;
 import com.example.shopofsoks.model.Sock;
@@ -7,6 +8,9 @@ import com.example.shopofsoks.model.SockCount;
 import com.example.shopofsoks.repository.SockCountRepository;
 import com.example.shopofsoks.repository.SockRepository;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
+
+import java.util.List;
 
 @Service
 public class SockService {
@@ -54,11 +58,8 @@ public class SockService {
     public SockDto outcomeSocks(SockDto sockDto) {
         checkParam(sockDto);
         Sock findSock = sockRepository.findSocksByColorAndCottonPart(sockDto.getColor(), sockDto.getCottonPart());
-        if (findSock == null) {
-            throw new IllegalArgumentException("such socks is not found");
-        } else {
-            decreaseCountSock(sockDto, findSock);
-        }
+        checkSockByNull(findSock);
+        decreaseCountSock(sockDto, findSock);
         return sockDto;
     }
     private void decreaseCountSock(SockDto sockDto, Sock findSock) {
@@ -72,5 +73,45 @@ public class SockService {
             sockCountRepository.save(findSockCount);
         }
 
+    }
+
+    public Integer getCountSocksbyParam(String color, Operat operation, Integer cottonPart) {
+        boolean isWrongValueCottonPart = cottonPart < 0 || cottonPart > 100;
+        if (isWrongValueCottonPart) {
+            throw new IllegalArgumentException("wrone value cottonPart");
+        }
+        switch (operation) {
+
+            case moreThan:
+                List<Sock> listSocks = sockRepository.findSocksByColorAndCottonPartAfter(color, cottonPart);
+                checkListSocksByNullOrEmpty(listSocks);
+                return getCountSocks(listSocks);
+            case lessThan:
+                listSocks = sockRepository.findSocksByColorAndCottonPartBefore(color, cottonPart);
+                checkListSocksByNullOrEmpty(listSocks);
+                return getCountSocks(listSocks);
+            case equal:
+                Sock findSock = sockRepository.findSocksByColorAndCottonPart(color, cottonPart);
+                checkSockByNull(findSock);
+                return findSock.getSockCount().getCount();
+        }
+        throw  new IllegalArgumentException("Sock is not found");
+    }
+
+    private void checkListSocksByNullOrEmpty(List<Sock> listSocks) {
+        if (listSocks == null || listSocks.isEmpty()) {
+            throw new IllegalArgumentException("Socks - is not Found");
+        }
+    }
+    private void checkSockByNull(Sock findSock) {
+        if (findSock == null) {
+            throw new IllegalArgumentException("Sock is not found");
+        }
+    }
+    private Integer getCountSocks(List<Sock> listSocks) {
+        return listSocks.stream()
+                .map(Sock::getSockCount)
+                .mapToInt(SockCount::getCount)
+                .sum();
     }
 }

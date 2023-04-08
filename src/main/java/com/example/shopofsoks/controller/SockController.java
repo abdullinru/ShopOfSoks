@@ -1,5 +1,6 @@
 package com.example.shopofsoks.controller;
 
+import com.example.shopofsoks.Operat;
 import com.example.shopofsoks.dto.SockDto;
 import com.example.shopofsoks.service.SockService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.webjars.NotFoundException;
 
 @RestController
 @RequestMapping ("/api/socks")
@@ -68,5 +70,21 @@ public class SockController {
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok(result);
+    }
+
+    @GetMapping
+    public ResponseEntity<String> getCountSocksbyParam(@RequestParam(name = "color") String color,
+                                                        @RequestParam(name = "operation") String operation,
+                                                        @RequestParam(name = "cottonPart") Integer cottonPart) {
+//        log.info("Was invoked addAds method from {}", AdsController.class.getSimpleName());
+
+        Integer result = null;
+        try {
+            Operat operat = Operat.valueOf(operation);
+            result = sockService.getCountSocksbyParam(color, operat, cottonPart);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(result.toString());
     }
 }
