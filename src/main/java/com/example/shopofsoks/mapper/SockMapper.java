@@ -18,4 +18,9 @@ public interface SockMapper {
 
     @Mapping(source = "quantity", target = "count")
     SockCount dtoToSockCount(SockDto sockDto);
+
+    @Mapping(source = "color", target = "color")
+    @Mapping(source = "cottonPart", target = "cottonPart")
+    @Mapping(source = "sockCount.count", target = "quantity")
+    SockDto toDtoSock(Sock sock);
 }
