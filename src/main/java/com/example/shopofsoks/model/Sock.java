@@ -48,6 +48,14 @@ public class Sock {
         this.cottonPart = cottonPart;
     }
 
+    public SockCount getSockCount() {
+        return sockCount;
+    }
+
+    public void setSockCount(SockCount sockCount) {
+        this.sockCount = sockCount;
+    }
+
     public boolean equals(Object object) {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
