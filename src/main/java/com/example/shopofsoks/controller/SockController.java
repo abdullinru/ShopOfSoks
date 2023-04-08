@@ -8,12 +8,8 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.webjars.NotFoundException;
 
 @RestController
 @RequestMapping ("/api/socks")
@@ -24,30 +20,14 @@ public class SockController {
         this.sockService = sockService;
     }
 
-//    @Operation(summary = "Получить все объявления",
-//            description = "")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "OK",
-//                    content = @Content(mediaType = "*/*",
-//                            schema = @Schema(implementation = ResponseWrapperAds.class)))})
-
-//    @GetMapping
-//    public ResponseEntity<ResponseWrapperAds> getAllAds() {
-//        log.info("Was invoked getAllAds method from {}", AdsController.class.getSimpleName());
-//        return ResponseEntity.ok(adsService.getAllAds());
-//    }
-
-//    @Operation(summary = "Создать новое объявление",
-//            description = "")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "201", description = "Created",
-//                    content = @Content(mediaType = "*/*",
-//                            schema = @Schema(implementation = AdsDto.class))),
-//            @ApiResponse(responseCode = "401", description = "Unauthorized"),
-//            @ApiResponse(responseCode = "403", description = "Forbidden"),
-//            @ApiResponse(responseCode = "404", description = "Not Found")})
-
-
+    @Operation(summary = "Сделать приход носков на склад",
+            description = "")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK",
+                    content = @Content(mediaType = "*/*",
+                            schema = @Schema(implementation = SockDto.class))),
+            @ApiResponse(responseCode = "400", description = "badRequest"),
+            @ApiResponse(responseCode = "500", description = "error on server")})
     @PostMapping("/income")
     public ResponseEntity<SockDto> incomeSocks(@RequestBody SockDto sockDto) {
 //        log.info("Was invoked addAds method from {}", AdsController.class.getSimpleName());
@@ -60,6 +40,14 @@ public class SockController {
         return ResponseEntity.ok(result);
     }
 
+    @Operation(summary = "Сделать отпуск носков со склада",
+            description = "")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK",
+                    content = @Content(mediaType = "*/*",
+                            schema = @Schema(implementation = SockDto.class))),
+            @ApiResponse(responseCode = "400", description = "badRequest"),
+            @ApiResponse(responseCode = "500", description = "error on server")})
     @PostMapping("/outcome")
     public ResponseEntity<SockDto> outcomeSocks(@RequestBody SockDto sockDto) {
 //        log.info("Was invoked addAds method from {}", AdsController.class.getSimpleName());
@@ -72,6 +60,14 @@ public class SockController {
         return ResponseEntity.ok(result);
     }
 
+    @Operation(summary = "Получить общее количество носков на складе, соответствующее введенным параметрам",
+            description = "")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK",
+                    content = @Content(mediaType = "*/*",
+                            schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "400", description = "badRequest"),
+            @ApiResponse(responseCode = "500", description = "error on server")})
     @GetMapping
     public ResponseEntity<String> getCountSocksbyParam(@RequestParam(name = "color") String color,
                                                         @RequestParam(name = "operation") String operation,

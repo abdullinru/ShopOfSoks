@@ -8,7 +8,6 @@ import com.example.shopofsoks.model.SockCount;
 import com.example.shopofsoks.repository.SockCountRepository;
 import com.example.shopofsoks.repository.SockRepository;
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
 
 import java.util.List;
 
