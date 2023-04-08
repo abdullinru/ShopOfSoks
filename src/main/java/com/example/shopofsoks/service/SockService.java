@@ -25,7 +25,7 @@ public class SockService {
         if (findSock == null) {
             saveNewSock(sockDto);
         } else {
-            updateCountSock(sockDto, findSock);
+            increaseCountSock(sockDto, findSock);
         }
         return sockDto;
     }
@@ -44,10 +44,33 @@ public class SockService {
         sockCountRepository.save(sockCount);
     }
 
-    private void updateCountSock(SockDto sockDto, Sock findSock) {
+    private void increaseCountSock(SockDto sockDto, Sock findSock) {
         SockCount findSockCount = findSock.getSockCount();
         int currentCount = findSockCount.getCount();
         findSockCount.setCount(currentCount + sockDto.getQuantity());
         sockCountRepository.save(findSockCount);
+    }
+
+    public SockDto outcomeSocks(SockDto sockDto) {
+        checkParam(sockDto);
+        Sock findSock = sockRepository.findSocksByColorAndCottonPart(sockDto.getColor(), sockDto.getCottonPart());
+        if (findSock == null) {
+            throw new IllegalArgumentException("such socks is not found");
+        } else {
+            decreaseCountSock(sockDto, findSock);
+        }
+        return sockDto;
+    }
+    private void decreaseCountSock(SockDto sockDto, Sock findSock) {
+        SockCount findSockCount = findSock.getSockCount();
+        int currentCount = findSockCount.getCount();
+        int requiredCount = sockDto.getQuantity();
+        if (currentCount < requiredCount) {
+            throw new IllegalArgumentException("such socks is not enough");
+        } else {
+            findSockCount.setCount(currentCount - requiredCount);
+            sockCountRepository.save(findSockCount);
+        }
+
     }
 }

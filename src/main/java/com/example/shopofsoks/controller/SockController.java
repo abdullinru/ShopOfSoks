@@ -57,4 +57,16 @@ public class SockController {
         }
         return ResponseEntity.ok(result);
     }
+
+    @PostMapping("/outcome")
+    public ResponseEntity<SockDto> outcomeSocks(@RequestBody SockDto sockDto) {
+//        log.info("Was invoked addAds method from {}", AdsController.class.getSimpleName());
+        SockDto result = null;
+        try {
+            result = sockService.outcomeSocks(sockDto);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(result);
+    }
 }
