@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -28,6 +29,7 @@ public class SockController {
                             schema = @Schema(implementation = SockDto.class))),
             @ApiResponse(responseCode = "400", description = "badRequest"),
             @ApiResponse(responseCode = "500", description = "error on server")})
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/income")
     public ResponseEntity<SockDto> incomeSocks(@RequestBody SockDto sockDto) {
 
@@ -48,6 +50,7 @@ public class SockController {
                             schema = @Schema(implementation = SockDto.class))),
             @ApiResponse(responseCode = "400", description = "badRequest"),
             @ApiResponse(responseCode = "500", description = "error on server")})
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/outcome")
     public ResponseEntity<SockDto> outcomeSocks(@RequestBody SockDto sockDto) {
 
