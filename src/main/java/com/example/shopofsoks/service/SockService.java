@@ -7,6 +7,7 @@ import com.example.shopofsoks.model.Sock;
 import com.example.shopofsoks.model.SockCount;
 import com.example.shopofsoks.repository.SockCountRepository;
 import com.example.shopofsoks.repository.SockRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,8 @@ public class SockService {
     private final SockRepository sockRepository;
     private final SockCountRepository sockCountRepository;
 
+    @Autowired
+    private SockMapper sockMapper;
 
     public SockService(SockRepository sockRepository, SockCountRepository sockCountRepository) {
         this.sockRepository = sockRepository;
@@ -41,7 +44,7 @@ public class SockService {
         } else {
             increaseCountSock(sockDto, findSock);
         }
-        return SockMapper.INSTANCE.toDtoSock(findSock);
+        return sockMapper.toDtoSock(findSock);
     }
 
     /**
@@ -64,13 +67,13 @@ public class SockService {
      * @return SockDto
      */
     private SockDto saveNewSock (SockDto sockDto) {
-        Sock sock = SockMapper.INSTANCE.dtoToSock(sockDto);
-        SockCount sockCount = SockMapper.INSTANCE.dtoToSockCount(sockDto);
+        Sock sock = sockMapper.dtoToSock(sockDto);
+        SockCount sockCount = sockMapper.dtoToSockCount(sockDto);
         sockCount.setSock(sock);
         sockRepository.save(sock);
         sockCountRepository.save(sockCount);
         sock.setSockCount(sockCount);
-        return SockMapper.INSTANCE.toDtoSock(sock);
+        return sockMapper.toDtoSock(sock);
     }
 
     /**
@@ -95,7 +98,7 @@ public class SockService {
         Sock findSock = sockRepository.findSocksByColorAndCottonPart(sockDto.getColor(), sockDto.getCottonPart());
         checkSockByNull(findSock);
         decreaseCountSock(sockDto, findSock);
-        return SockMapper.INSTANCE.toDtoSock(findSock);
+        return sockMapper.toDtoSock(findSock);
     }
 
     /**

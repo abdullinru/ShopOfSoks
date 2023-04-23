@@ -10,7 +10,7 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring")
 public interface SockMapper {
 
-    SockMapper INSTANCE = Mappers.getMapper(SockMapper.class);
+//    SockMapper INSTANCE = Mappers.getMapper(SockMapper.class);
 
     @Mapping(source = "color", target = "color")
     @Mapping(source = "cottonPart", target = "cottonPart")
