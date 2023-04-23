@@ -1,6 +1,5 @@
 package com.example.shopofsoks.controller;
 
-import com.example.shopofsoks.Operat;
 import com.example.shopofsoks.dto.SockDto;
 import com.example.shopofsoks.service.SockService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,12 +32,7 @@ public class SockController {
     @PostMapping("/income")
     public ResponseEntity<SockDto> incomeSocks(@RequestBody SockDto sockDto) {
 
-        SockDto result = null;
-        try {
-            result = sockService.incomeSocks(sockDto);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
-        }
+        SockDto result = sockService.incomeSocks(sockDto);
         return ResponseEntity.ok(result);
     }
 
@@ -54,12 +48,7 @@ public class SockController {
     @PostMapping("/outcome")
     public ResponseEntity<SockDto> outcomeSocks(@RequestBody SockDto sockDto) {
 
-        SockDto result = null;
-        try {
-            result = sockService.outcomeSocks(sockDto);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
-        }
+        SockDto result = sockService.outcomeSocks(sockDto);;
         return ResponseEntity.ok(result);
     }
 
@@ -76,13 +65,9 @@ public class SockController {
                                                         @RequestParam(name = "operation") String operation,
                                                         @RequestParam(name = "cottonPart") Integer cottonPart) {
 
-        Integer result = null;
-        try {
-            Operat operat = Operat.valueOf(operation);
-            result = sockService.getCountSocksbyParam(color, operat, cottonPart);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
-        }
+        OperationType operat = OperationType.valueOf(operation);
+        Integer result = sockService.getCountSocksbyParam(color, operat, cottonPart);
+
         return ResponseEntity.ok(result.toString());
     }
 }

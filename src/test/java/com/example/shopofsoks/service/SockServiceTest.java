@@ -1,6 +1,6 @@
 package com.example.shopofsoks.service;
 
-import com.example.shopofsoks.Operat;
+import com.example.shopofsoks.controller.OperationType;
 import com.example.shopofsoks.dto.SockDto;
 import com.example.shopofsoks.model.Sock;
 import com.example.shopofsoks.model.SockCount;
@@ -115,7 +115,7 @@ class SockServiceTest {
     public void getCountTestWrongParam() {
         String color = "Black";
         int wrongCottonPart = 110;
-        Operat ravno = Operat.equal;
+        OperationType ravno = OperationType.equal;
         Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> sockService.getCountSocksbyParam(color, ravno, wrongCottonPart ));
     }
@@ -124,7 +124,7 @@ class SockServiceTest {
     public void getCountOperMoreNegativeTest() {
         String color = "Black";
         int cottonPart = 10;
-        Operat more = Operat.moreThan;
+        OperationType more = OperationType.moreThan;
         Mockito.when(sockRepository.findSocksByColorAndCottonPartAfter(color, cottonPart))
                 .thenReturn(Collections.emptyList());
         Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
@@ -134,7 +134,7 @@ class SockServiceTest {
     public void getCountOperLessNegativeTest() {
         String color = "Black";
         int cottonPart = 10;
-        Operat less = Operat.lessThan;
+        OperationType less = OperationType.lessThan;
         Mockito.when(sockRepository.findSocksByColorAndCottonPartBefore(color, cottonPart))
                 .thenReturn(Collections.emptyList());
         Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
@@ -144,7 +144,7 @@ class SockServiceTest {
     public void getCountOperEqualNegativeTest() {
         String color = "Black";
         int cottonPart = 10;
-        Operat equal = Operat.equal;
+        OperationType equal = OperationType.equal;
         Mockito.when(sockRepository.findSocksByColorAndCottonPart(color, cottonPart))
                 .thenReturn(null);
         Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
@@ -155,7 +155,7 @@ class SockServiceTest {
     public void getCountOperEqualPositiveTest() {
         String color = "Black";
         int cottonPart = 10;
-        Operat equal = Operat.equal;
+        OperationType equal = OperationType.equal;
         Mockito.when(sockRepository.findSocksByColorAndCottonPart(color, cottonPart))
                 .thenReturn(sock);
         Assertions.assertThat(sockService.getCountSocksbyParam(color, equal, cottonPart)).isEqualTo(sock.getSockCount().getCount());
@@ -164,7 +164,7 @@ class SockServiceTest {
     public void getCountOperMorePositiveTest() {
         String color = "Black";
         int cottonPart = 10;
-        Operat more = Operat.moreThan;
+        OperationType more = OperationType.moreThan;
         List<Sock> sockList = new ArrayList<>();
         sockList.add(sock);
         sockList.add(sock2);
@@ -176,7 +176,7 @@ class SockServiceTest {
     public void getCountOperLessPositiveTest() {
         String color = "Black";
         int cottonPart = 10;
-        Operat less = Operat.lessThan;
+        OperationType less = OperationType.lessThan;
         List<Sock> sockList = new ArrayList<>();
         sockList.add(sock);
         sockList.add(sock2);

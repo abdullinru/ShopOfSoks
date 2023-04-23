@@ -1,6 +1,6 @@
 package com.example.shopofsoks.service;
 
-import com.example.shopofsoks.Operat;
+import com.example.shopofsoks.controller.OperationType;
 import com.example.shopofsoks.dto.SockDto;
 import com.example.shopofsoks.mapper.SockMapper;
 import com.example.shopofsoks.model.Sock;
@@ -54,7 +54,7 @@ public class SockService {
         boolean isWrongValueCottonPart = sockDto.getCottonPart() < 0 || sockDto.getCottonPart() > 100;
         boolean isWrongValueQuantity = sockDto.getQuantity() <= 0;
         if (isWrongValueCottonPart || isWrongValueQuantity) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Illegal argument CottonPart or quantity");
         }
     }
 
@@ -127,7 +127,7 @@ public class SockService {
      * @throw IllegalArgumentException
      * @return
      */
-    public Integer getCountSocksbyParam(String color, Operat operation, Integer cottonPart) {
+    public Integer getCountSocksbyParam(String color, OperationType operation, Integer cottonPart) {
         boolean isWrongValueCottonPart = cottonPart < 0 || cottonPart > 100;
         if (isWrongValueCottonPart) {
             throw new IllegalArgumentException("wrone value cottonPart");

@@ -1,6 +1,5 @@
 package com.example.shopofsoks.controller;
 
-import com.example.shopofsoks.Operat;
 import com.example.shopofsoks.dto.SockDto;
 import com.example.shopofsoks.model.Sock;
 import com.example.shopofsoks.model.SockCount;
@@ -182,7 +181,7 @@ class SockControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/socks?color={color}&operation={oper}&cottonPart={cottonPart}",
-                                color, Operat.equal.toString(), wrongCottonPart)
+                                color, OperationType.equal.toString(), wrongCottonPart)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
@@ -195,21 +194,21 @@ class SockControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/socks?color={color}&operation={oper}&cottonPart={cottonPart}",
-                                color, Operat.equal.toString(), cottonPart)
+                                color, OperationType.equal.toString(), cottonPart)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/socks?color={color}&operation={oper}&cottonPart={cottonPart}",
-                                color, Operat.lessThan.toString(), cottonPart)
+                                color, OperationType.lessThan.toString(), cottonPart)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/socks?color={color}&operation={oper}&cottonPart={cottonPart}",
-                                color, Operat.moreThan.toString(), cottonPart)
+                                color, OperationType.moreThan.toString(), cottonPart)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
@@ -226,7 +225,7 @@ class SockControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/socks?color={color}&operation={oper}&cottonPart={cottonPart}",
-                                color, Operat.equal.toString(), cottonPart)
+                                color, OperationType.equal.toString(), cottonPart)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -234,7 +233,7 @@ class SockControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/socks?color={color}&operation={oper}&cottonPart={cottonPart}",
-                                color, Operat.lessThan.toString(), cottonPart)
+                                color, OperationType.lessThan.toString(), cottonPart)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -242,7 +241,7 @@ class SockControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/socks?color={color}&operation={oper}&cottonPart={cottonPart}",
-                                color, Operat.moreThan.toString(), cottonPart)
+                                color, OperationType.moreThan.toString(), cottonPart)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
